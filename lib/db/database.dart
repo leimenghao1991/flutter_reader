@@ -7,8 +7,8 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-@DataClassName("shelf")
-class Book extends Table {
+@DataClassName("BookInfo")
+class BookInfos extends Table {
   TextColumn get bookId => text()();
 
   TextColumn get name => text()();
@@ -24,8 +24,8 @@ class Book extends Table {
   IntColumn get addTime => integer()();
 }
 
-@DataClassName("read_info")
-class ReadInfo extends Table {
+@DataClassName("ReadHistory")
+class ReadHistories extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get bookId => text()();
@@ -45,10 +45,42 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Book, ReadInfo])
+@UseMoor(tables: [BookInfos, ReadHistories])
 class Database extends _$Database {
   Database() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+
+  Future insertBook(BookInfo book) {
+    return into(bookInfos).insert(book.toCompanion(false));
+  }
+
+  Future<List<BookInfo>> getAllBookInfos() {
+    return select(bookInfos).get();
+  }
+
+  Future updateBook(BookInfo book) {
+    return update(bookInfos).replace(book);
+  }
+
+  Future deleteBook(BookInfo book) {
+    return delete(bookInfos).delete(book);
+  }
+
+  Future insertReadInfo(ReadHistory history) {
+    return into(readHistories).insert(history.toCompanion(false));
+  }
+
+  Future<List<ReadHistory>> getAllReadInfos() {
+    return select(readHistories).get();
+  }
+
+  Future updateReadInfo(ReadHistory history) {
+    return update(readHistories).replace(history);
+  }
+
+  Future deleteReadInfo(ReadHistory history) {
+    return delete(readHistories).delete(history);
+  }
 }

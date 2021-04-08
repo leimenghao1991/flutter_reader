@@ -7,7 +7,7 @@ part of 'database.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class shelf extends DataClass implements Insertable<shelf> {
+class BookInfo extends DataClass implements Insertable<BookInfo> {
   final String bookId;
   final String name;
   final int size;
@@ -15,7 +15,7 @@ class shelf extends DataClass implements Insertable<shelf> {
   final String path;
   final String encode;
   final int addTime;
-  shelf(
+  BookInfo(
       {@required this.bookId,
       @required this.name,
       @required this.size,
@@ -23,12 +23,12 @@ class shelf extends DataClass implements Insertable<shelf> {
       @required this.path,
       @required this.encode,
       @required this.addTime});
-  factory shelf.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory BookInfo.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final stringType = db.typeSystem.forDartType<String>();
     final intType = db.typeSystem.forDartType<int>();
-    return shelf(
+    return BookInfo(
       bookId:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}book_id']),
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
@@ -69,8 +69,8 @@ class shelf extends DataClass implements Insertable<shelf> {
     return map;
   }
 
-  BookCompanion toCompanion(bool nullToAbsent) {
-    return BookCompanion(
+  BookInfosCompanion toCompanion(bool nullToAbsent) {
+    return BookInfosCompanion(
       bookId:
           bookId == null && nullToAbsent ? const Value.absent() : Value(bookId),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
@@ -86,10 +86,10 @@ class shelf extends DataClass implements Insertable<shelf> {
     );
   }
 
-  factory shelf.fromJson(Map<String, dynamic> json,
+  factory BookInfo.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return shelf(
+    return BookInfo(
       bookId: serializer.fromJson<String>(json['bookId']),
       name: serializer.fromJson<String>(json['name']),
       size: serializer.fromJson<int>(json['size']),
@@ -113,7 +113,7 @@ class shelf extends DataClass implements Insertable<shelf> {
     };
   }
 
-  shelf copyWith(
+  BookInfo copyWith(
           {String bookId,
           String name,
           int size,
@@ -121,7 +121,7 @@ class shelf extends DataClass implements Insertable<shelf> {
           String path,
           String encode,
           int addTime}) =>
-      shelf(
+      BookInfo(
         bookId: bookId ?? this.bookId,
         name: name ?? this.name,
         size: size ?? this.size,
@@ -132,7 +132,7 @@ class shelf extends DataClass implements Insertable<shelf> {
       );
   @override
   String toString() {
-    return (StringBuffer('shelf(')
+    return (StringBuffer('BookInfo(')
           ..write('bookId: $bookId, ')
           ..write('name: $name, ')
           ..write('size: $size, ')
@@ -158,7 +158,7 @@ class shelf extends DataClass implements Insertable<shelf> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is shelf &&
+      (other is BookInfo &&
           other.bookId == this.bookId &&
           other.name == this.name &&
           other.size == this.size &&
@@ -168,7 +168,7 @@ class shelf extends DataClass implements Insertable<shelf> {
           other.addTime == this.addTime);
 }
 
-class BookCompanion extends UpdateCompanion<shelf> {
+class BookInfosCompanion extends UpdateCompanion<BookInfo> {
   final Value<String> bookId;
   final Value<String> name;
   final Value<int> size;
@@ -176,7 +176,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
   final Value<String> path;
   final Value<String> encode;
   final Value<int> addTime;
-  const BookCompanion({
+  const BookInfosCompanion({
     this.bookId = const Value.absent(),
     this.name = const Value.absent(),
     this.size = const Value.absent(),
@@ -185,7 +185,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
     this.encode = const Value.absent(),
     this.addTime = const Value.absent(),
   });
-  BookCompanion.insert({
+  BookInfosCompanion.insert({
     @required String bookId,
     @required String name,
     @required int size,
@@ -200,7 +200,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
         path = Value(path),
         encode = Value(encode),
         addTime = Value(addTime);
-  static Insertable<shelf> custom({
+  static Insertable<BookInfo> custom({
     Expression<String> bookId,
     Expression<String> name,
     Expression<int> size,
@@ -220,7 +220,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
     });
   }
 
-  BookCompanion copyWith(
+  BookInfosCompanion copyWith(
       {Value<String> bookId,
       Value<String> name,
       Value<int> size,
@@ -228,7 +228,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
       Value<String> path,
       Value<String> encode,
       Value<int> addTime}) {
-    return BookCompanion(
+    return BookInfosCompanion(
       bookId: bookId ?? this.bookId,
       name: name ?? this.name,
       size: size ?? this.size,
@@ -268,7 +268,7 @@ class BookCompanion extends UpdateCompanion<shelf> {
 
   @override
   String toString() {
-    return (StringBuffer('BookCompanion(')
+    return (StringBuffer('BookInfosCompanion(')
           ..write('bookId: $bookId, ')
           ..write('name: $name, ')
           ..write('size: $size, ')
@@ -281,10 +281,11 @@ class BookCompanion extends UpdateCompanion<shelf> {
   }
 }
 
-class $BookTable extends Book with TableInfo<$BookTable, shelf> {
+class $BookInfosTable extends BookInfos
+    with TableInfo<$BookInfosTable, BookInfo> {
   final GeneratedDatabase _db;
   final String _alias;
-  $BookTable(this._db, [this._alias]);
+  $BookInfosTable(this._db, [this._alias]);
   final VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
   GeneratedTextColumn _bookId;
   @override
@@ -373,13 +374,13 @@ class $BookTable extends Book with TableInfo<$BookTable, shelf> {
   List<GeneratedColumn> get $columns =>
       [bookId, name, size, cover, path, encode, addTime];
   @override
-  $BookTable get asDslTable => this;
+  $BookInfosTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'book';
+  String get $tableName => _alias ?? 'book_infos';
   @override
-  final String actualTableName = 'book';
+  final String actualTableName = 'book_infos';
   @override
-  VerificationContext validateIntegrity(Insertable<shelf> instance,
+  VerificationContext validateIntegrity(Insertable<BookInfo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -431,36 +432,36 @@ class $BookTable extends Book with TableInfo<$BookTable, shelf> {
   @override
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
-  shelf map(Map<String, dynamic> data, {String tablePrefix}) {
+  BookInfo map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return shelf.fromData(data, _db, prefix: effectivePrefix);
+    return BookInfo.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $BookTable createAlias(String alias) {
-    return $BookTable(_db, alias);
+  $BookInfosTable createAlias(String alias) {
+    return $BookInfosTable(_db, alias);
   }
 }
 
-class read_info extends DataClass implements Insertable<read_info> {
+class ReadHistory extends DataClass implements Insertable<ReadHistory> {
   final int id;
   final String bookId;
   final int readTime;
   final int readPosition;
   final bool lastRead;
-  read_info(
+  ReadHistory(
       {@required this.id,
       @required this.bookId,
       @required this.readTime,
       @required this.readPosition,
       @required this.lastRead});
-  factory read_info.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory ReadHistory.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
     final boolType = db.typeSystem.forDartType<bool>();
-    return read_info(
+    return ReadHistory(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       bookId:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}book_id']),
@@ -493,8 +494,8 @@ class read_info extends DataClass implements Insertable<read_info> {
     return map;
   }
 
-  ReadInfoCompanion toCompanion(bool nullToAbsent) {
-    return ReadInfoCompanion(
+  ReadHistoriesCompanion toCompanion(bool nullToAbsent) {
+    return ReadHistoriesCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       bookId:
           bookId == null && nullToAbsent ? const Value.absent() : Value(bookId),
@@ -510,10 +511,10 @@ class read_info extends DataClass implements Insertable<read_info> {
     );
   }
 
-  factory read_info.fromJson(Map<String, dynamic> json,
+  factory ReadHistory.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return read_info(
+    return ReadHistory(
       id: serializer.fromJson<int>(json['id']),
       bookId: serializer.fromJson<String>(json['bookId']),
       readTime: serializer.fromJson<int>(json['readTime']),
@@ -533,13 +534,13 @@ class read_info extends DataClass implements Insertable<read_info> {
     };
   }
 
-  read_info copyWith(
+  ReadHistory copyWith(
           {int id,
           String bookId,
           int readTime,
           int readPosition,
           bool lastRead}) =>
-      read_info(
+      ReadHistory(
         id: id ?? this.id,
         bookId: bookId ?? this.bookId,
         readTime: readTime ?? this.readTime,
@@ -548,7 +549,7 @@ class read_info extends DataClass implements Insertable<read_info> {
       );
   @override
   String toString() {
-    return (StringBuffer('read_info(')
+    return (StringBuffer('ReadHistory(')
           ..write('id: $id, ')
           ..write('bookId: $bookId, ')
           ..write('readTime: $readTime, ')
@@ -568,7 +569,7 @@ class read_info extends DataClass implements Insertable<read_info> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is read_info &&
+      (other is ReadHistory &&
           other.id == this.id &&
           other.bookId == this.bookId &&
           other.readTime == this.readTime &&
@@ -576,20 +577,20 @@ class read_info extends DataClass implements Insertable<read_info> {
           other.lastRead == this.lastRead);
 }
 
-class ReadInfoCompanion extends UpdateCompanion<read_info> {
+class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
   final Value<int> id;
   final Value<String> bookId;
   final Value<int> readTime;
   final Value<int> readPosition;
   final Value<bool> lastRead;
-  const ReadInfoCompanion({
+  const ReadHistoriesCompanion({
     this.id = const Value.absent(),
     this.bookId = const Value.absent(),
     this.readTime = const Value.absent(),
     this.readPosition = const Value.absent(),
     this.lastRead = const Value.absent(),
   });
-  ReadInfoCompanion.insert({
+  ReadHistoriesCompanion.insert({
     this.id = const Value.absent(),
     @required String bookId,
     @required int readTime,
@@ -599,7 +600,7 @@ class ReadInfoCompanion extends UpdateCompanion<read_info> {
         readTime = Value(readTime),
         readPosition = Value(readPosition),
         lastRead = Value(lastRead);
-  static Insertable<read_info> custom({
+  static Insertable<ReadHistory> custom({
     Expression<int> id,
     Expression<String> bookId,
     Expression<int> readTime,
@@ -615,13 +616,13 @@ class ReadInfoCompanion extends UpdateCompanion<read_info> {
     });
   }
 
-  ReadInfoCompanion copyWith(
+  ReadHistoriesCompanion copyWith(
       {Value<int> id,
       Value<String> bookId,
       Value<int> readTime,
       Value<int> readPosition,
       Value<bool> lastRead}) {
-    return ReadInfoCompanion(
+    return ReadHistoriesCompanion(
       id: id ?? this.id,
       bookId: bookId ?? this.bookId,
       readTime: readTime ?? this.readTime,
@@ -653,7 +654,7 @@ class ReadInfoCompanion extends UpdateCompanion<read_info> {
 
   @override
   String toString() {
-    return (StringBuffer('ReadInfoCompanion(')
+    return (StringBuffer('ReadHistoriesCompanion(')
           ..write('id: $id, ')
           ..write('bookId: $bookId, ')
           ..write('readTime: $readTime, ')
@@ -664,11 +665,11 @@ class ReadInfoCompanion extends UpdateCompanion<read_info> {
   }
 }
 
-class $ReadInfoTable extends ReadInfo
-    with TableInfo<$ReadInfoTable, read_info> {
+class $ReadHistoriesTable extends ReadHistories
+    with TableInfo<$ReadHistoriesTable, ReadHistory> {
   final GeneratedDatabase _db;
   final String _alias;
-  $ReadInfoTable(this._db, [this._alias]);
+  $ReadHistoriesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -732,13 +733,13 @@ class $ReadInfoTable extends ReadInfo
   List<GeneratedColumn> get $columns =>
       [id, bookId, readTime, readPosition, lastRead];
   @override
-  $ReadInfoTable get asDslTable => this;
+  $ReadHistoriesTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'read_info';
+  String get $tableName => _alias ?? 'read_histories';
   @override
-  final String actualTableName = 'read_info';
+  final String actualTableName = 'read_histories';
   @override
-  VerificationContext validateIntegrity(Insertable<read_info> instance,
+  VerificationContext validateIntegrity(Insertable<ReadHistory> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -777,25 +778,27 @@ class $ReadInfoTable extends ReadInfo
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  read_info map(Map<String, dynamic> data, {String tablePrefix}) {
+  ReadHistory map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return read_info.fromData(data, _db, prefix: effectivePrefix);
+    return ReadHistory.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $ReadInfoTable createAlias(String alias) {
-    return $ReadInfoTable(_db, alias);
+  $ReadHistoriesTable createAlias(String alias) {
+    return $ReadHistoriesTable(_db, alias);
   }
 }
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $BookTable _book;
-  $BookTable get book => _book ??= $BookTable(this);
-  $ReadInfoTable _readInfo;
-  $ReadInfoTable get readInfo => _readInfo ??= $ReadInfoTable(this);
+  $BookInfosTable _bookInfos;
+  $BookInfosTable get bookInfos => _bookInfos ??= $BookInfosTable(this);
+  $ReadHistoriesTable _readHistories;
+  $ReadHistoriesTable get readHistories =>
+      _readHistories ??= $ReadHistoriesTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [book, readInfo];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [bookInfos, readHistories];
 }

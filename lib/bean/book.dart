@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// 书籍模型
 class Book {
   String bookId;
@@ -19,6 +21,15 @@ class Book {
 
   /// 添加时间
   num addTime;
+
+  Book(
+      {@required this.bookId,
+      @required this.name,
+      @required this.size,
+      @required this.cover,
+      @required this.path,
+      @required this.encode,
+      @required this.addTime});
 }
 
 class ReadInfo {
@@ -33,4 +44,10 @@ class ReadInfo {
 
   /// 是否是最后阅读的书籍
   bool lastRead;
+
+  ReadInfo(
+      {@required this.bookId,
+      @required this.lastReadTime,
+      @required this.readPosition,
+      @required this.lastRead});
 }

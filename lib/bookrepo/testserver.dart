@@ -2,11 +2,14 @@
 import 'package:flutter_reader/bean/book.dart';
 import 'package:flutter_reader/bookrepo/bookserver.dart';
 
+import '../db/database.dart';
+
 class TestBookServer implements BookServer {
+  final db = Database();
+
   @override
   Future<bool> addBookToShelf(Book book) {
-    // TODO: implement addBookToShelf
-    throw UnimplementedError();
+    // return db.insertBook(BookIn)
   }
 
   @override
