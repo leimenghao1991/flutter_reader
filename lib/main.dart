@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/bloc/shelf_controller.dart';
-import 'package:flutter_reader/views/filepicker/filepicker.dart';
+import 'package:flutter_reader/views/filepicker/filepicker.dart' as filePicker;
 
 void main() {
   runApp(MyApp());
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
-    selectFile().then((selectedBook) => controller.addBook(selectedBook));
+    filePicker.selectFile().then((selectedBook) => controller.addBook(selectedBook));
   }
 
   @override
