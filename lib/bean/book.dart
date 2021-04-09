@@ -35,6 +35,18 @@ class Book {
   String toString() {
     return 'Book{bookId: $bookId, name: $name, size: $size, cover: $cover, path: $path, encode: $encode, addTime: $addTime}';
   }
+
+  bool isValid() => addTime != 0;
+
+  Book.invalid() {
+    bookId = "";
+    name = "";
+    size = 0;
+    cover = "";
+    path = "";
+    encode = "";
+    addTime = 0;
+  }
 }
 
 class ReadInfo {

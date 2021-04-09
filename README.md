@@ -2,15 +2,10 @@
 
 Flutter Reader App
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+1. 创建书架展示书籍
+2. 使用数据库保持添加的书籍和阅读的内容
+3. 添加本地书籍
+4. 解析并展示书籍内容
+5. 根据用户的设置展示阅读的UI（调节字体，背景等）
+6. 使用多种模式展示书籍（书架模式、画廊模式等）
