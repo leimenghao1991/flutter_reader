@@ -1,51 +1,48 @@
-
 import 'package:flutter_reader/bean/book.dart';
 import 'package:flutter_reader/bookrepo/bookserver.dart';
-
+import 'parser.dart' as parser;
 import '../db/database.dart';
 
-class TestBookServer implements BookServer {
+class LocalBookServer implements BookServer {
   final db = Database();
 
   @override
-  Future<bool> addBookToShelf(Book book) {
-    // return db.insertBook(BookIn)
+  Future<int> addBookToShelf(Book book) {
+    BookInfo info = parser.parseToBookInfo(book);
+    return db.insertBook(info);
   }
 
   @override
-  Future<bool> deleteShelfBook(String bookId) {
-    // TODO: implement deleteShelfBook
-    throw UnimplementedError();
+  Future<int> deleteShelfBook(String bookId) {
+    return db.deleteBookById(bookId);
   }
 
   @override
   Future<ReadInfo> getLastReadInfo() {
-    // TODO: implement getLastReadInfo
-    throw UnimplementedError();
+    return db.getLastReadInfo().then((value) => parser.parseToReadInfo(value));
   }
 
   @override
   Future<ReadInfo> getReadInfo(String bookId) {
-    // TODO: implement getReadInfo
-    throw UnimplementedError();
+    return db
+        .getHistoryByBookId(bookId)
+        .then((value) => parser.parseToReadInfo(value));
   }
 
   @override
   Future<List<ReadInfo>> getReadInfos() {
-    // TODO: implement getReadInfos
-    throw UnimplementedError();
+    return db.getAllReadInfos().then((histories) =>
+        histories.map((history) => parser.parseToReadInfo(history)).toList());
   }
 
   @override
   Future<List<Book>> getShelfBooks() {
-    // TODO: implement getShelfBooks
-    throw UnimplementedError();
+    return db.getAllBookInfos().then((bookInfos) =>
+        bookInfos.map((bookInfo) => parser.parseToBook(bookInfo)).toList());
   }
 
   @override
   Future<bool> updateReadInfo(ReadInfo readInfo) {
-    // TODO: implement updateReadInfo
-    throw UnimplementedError();
+    return db.updateReadInfo(parser.parseToHistory(readInfo));
   }
-
 }

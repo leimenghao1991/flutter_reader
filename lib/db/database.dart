@@ -22,12 +22,13 @@ class BookInfos extends Table {
   TextColumn get encode => text()();
 
   IntColumn get addTime => integer()();
+
+  @override
+  Set<Column> get primaryKey => {bookId};
 }
 
 @DataClassName("ReadHistory")
 class ReadHistories extends Table {
-  IntColumn get id => integer().autoIncrement()();
-
   TextColumn get bookId => text()();
 
   IntColumn get readTime => integer()();
@@ -35,6 +36,9 @@ class ReadHistories extends Table {
   IntColumn get readPosition => integer()();
 
   BoolColumn get lastRead => boolean()();
+
+  @override
+  Set<Column> get primaryKey => {bookId};
 }
 
 LazyDatabase _openConnection() {
@@ -53,7 +57,7 @@ class Database extends _$Database {
   int get schemaVersion => 1;
 
   Future insertBook(BookInfo book) {
-    return into(bookInfos).insert(book.toCompanion(false));
+    return into(bookInfos).insertOnConflictUpdate(book.toCompanion(false));
   }
 
   Future<List<BookInfo>> getAllBookInfos() {
@@ -68,12 +72,27 @@ class Database extends _$Database {
     return delete(bookInfos).delete(book);
   }
 
+  Future deleteBookById(String id) {
+    return (delete(bookInfos)..where((tbl) => tbl.bookId.equals(id))).go();
+  }
+
   Future insertReadInfo(ReadHistory history) {
-    return into(readHistories).insert(history.toCompanion(false));
+    return into(readHistories).insertOnConflictUpdate(history.toCompanion(false));
   }
 
   Future<List<ReadHistory>> getAllReadInfos() {
     return select(readHistories).get();
+  }
+
+  Future<ReadHistory> getLastReadInfo() {
+    return (select(readHistories)
+          ..orderBy([(row) => OrderingTerm.desc(row.readTime)])
+          ..limit(1))
+        .getSingle();
+  }
+
+  Future<ReadHistory> getHistoryByBookId(String bookId) {
+    return (select(readHistories)..where((tbl) => tbl.bookId.equals(bookId))).getSingle();
   }
 
   Future updateReadInfo(ReadHistory history) {
@@ -82,5 +101,10 @@ class Database extends _$Database {
 
   Future deleteReadInfo(ReadHistory history) {
     return delete(readHistories).delete(history);
+  }
+
+  Future deleteReadInfoByBookId(String bookId) {
+    return (delete(readHistories)..where((tbl) => tbl.bookId.equals(bookId)))
+        .go();
   }
 }

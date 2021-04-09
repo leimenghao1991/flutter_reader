@@ -14,10 +14,10 @@ abstract class BookServer {
   Future<ReadInfo> getReadInfo(String bookId);
 
   /// 添加书籍到书架
-  Future<bool> addBookToShelf(Book book);
+  Future<int> addBookToShelf(Book book);
 
   /// 删除书架书籍
-  Future<bool> deleteShelfBook(String bookId);
+  Future<int> deleteShelfBook(String bookId);
 
   /// 更新阅读记录
   Future<bool> updateReadInfo(ReadInfo readInfo);

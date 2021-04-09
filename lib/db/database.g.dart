@@ -430,7 +430,7 @@ class $BookInfosTable extends BookInfos
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {bookId};
   @override
   BookInfo map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -444,25 +444,22 @@ class $BookInfosTable extends BookInfos
 }
 
 class ReadHistory extends DataClass implements Insertable<ReadHistory> {
-  final int id;
   final String bookId;
   final int readTime;
   final int readPosition;
   final bool lastRead;
   ReadHistory(
-      {@required this.id,
-      @required this.bookId,
+      {@required this.bookId,
       @required this.readTime,
       @required this.readPosition,
       @required this.lastRead});
   factory ReadHistory.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final intType = db.typeSystem.forDartType<int>();
     final boolType = db.typeSystem.forDartType<bool>();
     return ReadHistory(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       bookId:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}book_id']),
       readTime:
@@ -476,9 +473,6 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
     if (!nullToAbsent || bookId != null) {
       map['book_id'] = Variable<String>(bookId);
     }
@@ -496,7 +490,6 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
 
   ReadHistoriesCompanion toCompanion(bool nullToAbsent) {
     return ReadHistoriesCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       bookId:
           bookId == null && nullToAbsent ? const Value.absent() : Value(bookId),
       readTime: readTime == null && nullToAbsent
@@ -515,7 +508,6 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return ReadHistory(
-      id: serializer.fromJson<int>(json['id']),
       bookId: serializer.fromJson<String>(json['bookId']),
       readTime: serializer.fromJson<int>(json['readTime']),
       readPosition: serializer.fromJson<int>(json['readPosition']),
@@ -526,7 +518,6 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
   Map<String, dynamic> toJson({ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
       'bookId': serializer.toJson<String>(bookId),
       'readTime': serializer.toJson<int>(readTime),
       'readPosition': serializer.toJson<int>(readPosition),
@@ -535,13 +526,8 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
   }
 
   ReadHistory copyWith(
-          {int id,
-          String bookId,
-          int readTime,
-          int readPosition,
-          bool lastRead}) =>
+          {String bookId, int readTime, int readPosition, bool lastRead}) =>
       ReadHistory(
-        id: id ?? this.id,
         bookId: bookId ?? this.bookId,
         readTime: readTime ?? this.readTime,
         readPosition: readPosition ?? this.readPosition,
@@ -550,7 +536,6 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
   @override
   String toString() {
     return (StringBuffer('ReadHistory(')
-          ..write('id: $id, ')
           ..write('bookId: $bookId, ')
           ..write('readTime: $readTime, ')
           ..write('readPosition: $readPosition, ')
@@ -561,16 +546,13 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
 
   @override
   int get hashCode => $mrjf($mrjc(
-      id.hashCode,
+      bookId.hashCode,
       $mrjc(
-          bookId.hashCode,
-          $mrjc(readTime.hashCode,
-              $mrjc(readPosition.hashCode, lastRead.hashCode)))));
+          readTime.hashCode, $mrjc(readPosition.hashCode, lastRead.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is ReadHistory &&
-          other.id == this.id &&
           other.bookId == this.bookId &&
           other.readTime == this.readTime &&
           other.readPosition == this.readPosition &&
@@ -578,20 +560,17 @@ class ReadHistory extends DataClass implements Insertable<ReadHistory> {
 }
 
 class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
-  final Value<int> id;
   final Value<String> bookId;
   final Value<int> readTime;
   final Value<int> readPosition;
   final Value<bool> lastRead;
   const ReadHistoriesCompanion({
-    this.id = const Value.absent(),
     this.bookId = const Value.absent(),
     this.readTime = const Value.absent(),
     this.readPosition = const Value.absent(),
     this.lastRead = const Value.absent(),
   });
   ReadHistoriesCompanion.insert({
-    this.id = const Value.absent(),
     @required String bookId,
     @required int readTime,
     @required int readPosition,
@@ -601,14 +580,12 @@ class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
         readPosition = Value(readPosition),
         lastRead = Value(lastRead);
   static Insertable<ReadHistory> custom({
-    Expression<int> id,
     Expression<String> bookId,
     Expression<int> readTime,
     Expression<int> readPosition,
     Expression<bool> lastRead,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
       if (bookId != null) 'book_id': bookId,
       if (readTime != null) 'read_time': readTime,
       if (readPosition != null) 'read_position': readPosition,
@@ -617,13 +594,11 @@ class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
   }
 
   ReadHistoriesCompanion copyWith(
-      {Value<int> id,
-      Value<String> bookId,
+      {Value<String> bookId,
       Value<int> readTime,
       Value<int> readPosition,
       Value<bool> lastRead}) {
     return ReadHistoriesCompanion(
-      id: id ?? this.id,
       bookId: bookId ?? this.bookId,
       readTime: readTime ?? this.readTime,
       readPosition: readPosition ?? this.readPosition,
@@ -634,9 +609,6 @@ class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
     if (bookId.present) {
       map['book_id'] = Variable<String>(bookId.value);
     }
@@ -655,7 +627,6 @@ class ReadHistoriesCompanion extends UpdateCompanion<ReadHistory> {
   @override
   String toString() {
     return (StringBuffer('ReadHistoriesCompanion(')
-          ..write('id: $id, ')
           ..write('bookId: $bookId, ')
           ..write('readTime: $readTime, ')
           ..write('readPosition: $readPosition, ')
@@ -670,15 +641,6 @@ class $ReadHistoriesTable extends ReadHistories
   final GeneratedDatabase _db;
   final String _alias;
   $ReadHistoriesTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
   final VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
   GeneratedTextColumn _bookId;
   @override
@@ -731,7 +693,7 @@ class $ReadHistoriesTable extends ReadHistories
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, bookId, readTime, readPosition, lastRead];
+      [bookId, readTime, readPosition, lastRead];
   @override
   $ReadHistoriesTable get asDslTable => this;
   @override
@@ -743,9 +705,6 @@ class $ReadHistoriesTable extends ReadHistories
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
-    }
     if (data.containsKey('book_id')) {
       context.handle(_bookIdMeta,
           bookId.isAcceptableOrUnknown(data['book_id'], _bookIdMeta));
@@ -776,7 +735,7 @@ class $ReadHistoriesTable extends ReadHistories
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {bookId};
   @override
   ReadHistory map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

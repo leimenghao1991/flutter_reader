@@ -30,6 +30,11 @@ class Book {
       @required this.path,
       @required this.encode,
       @required this.addTime});
+
+  @override
+  String toString() {
+    return 'Book{bookId: $bookId, name: $name, size: $size, cover: $cover, path: $path, encode: $encode, addTime: $addTime}';
+  }
 }
 
 class ReadInfo {
@@ -50,4 +55,9 @@ class ReadInfo {
       @required this.lastReadTime,
       @required this.readPosition,
       @required this.lastRead});
+
+  @override
+  String toString() {
+    return 'ReadInfo{bookId: $bookId, lastReadTime: $lastReadTime, readPosition: $readPosition, lastRead: $lastRead}';
+  }
 }
