@@ -45,4 +45,14 @@ class LocalBookServer implements BookServer {
   Future<bool> updateReadInfo(ReadInfo readInfo) {
     return db.updateReadInfo(parser.parseToHistory(readInfo));
   }
+
+  @override
+  Future<int> addReadInfo(ReadInfo readInfo) {
+    return db.insertReadInfo(parser.parseToHistory(readInfo));
+  }
+
+  @override
+  Future<bool> isBookExist(String bookId) {
+    return db.bookExist(bookId);
+  }
 }

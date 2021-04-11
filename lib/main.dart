@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/bloc/shelf_controller.dart';
+import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
 import 'package:flutter_reader/views/filepicker/filepicker.dart' as filePicker;
-import 'package:flutter_reader/views/shelf/shelf.dart';
+import 'package:flutter_reader/views/shelf/shelf_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  ShelfController controller = ShelfController();
+  ShelfBloc controller = ShelfBloc();
 
   void _incrementCounter() {
     setState(() {

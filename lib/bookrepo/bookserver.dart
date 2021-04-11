@@ -1,6 +1,9 @@
 import 'package:flutter_reader/bean/book.dart';
 
 abstract class BookServer {
+  /// 书籍是否存在
+  Future<bool> isBookExist(String bookId);
+
   /// 获取用户书架书籍信息
   Future<List<Book>> getShelfBooks();
 
@@ -21,4 +24,7 @@ abstract class BookServer {
 
   /// 更新阅读记录
   Future<bool> updateReadInfo(ReadInfo readInfo);
+
+  /// 增加阅读记录
+  Future <int> addReadInfo(ReadInfo readInfo);
 }

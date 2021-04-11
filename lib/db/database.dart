@@ -56,6 +56,12 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 1;
 
+  Future bookExist(String bookId) {
+    return (select(bookInfos)..where((tbl) => tbl.bookId.equals(bookId)))
+        .getSingleOrNull()
+        .then((result) => result != null);
+  }
+
   Future insertBook(BookInfo book) {
     return into(bookInfos).insertOnConflictUpdate(book.toCompanion(false));
   }
@@ -77,7 +83,8 @@ class Database extends _$Database {
   }
 
   Future insertReadInfo(ReadHistory history) {
-    return into(readHistories).insertOnConflictUpdate(history.toCompanion(false));
+    return into(readHistories)
+        .insertOnConflictUpdate(history.toCompanion(false));
   }
 
   Future<List<ReadHistory>> getAllReadInfos() {
@@ -88,11 +95,12 @@ class Database extends _$Database {
     return (select(readHistories)
           ..orderBy([(row) => OrderingTerm.desc(row.readTime)])
           ..limit(1))
-        .getSingle();
+        .getSingleOrNull();
   }
 
   Future<ReadHistory> getHistoryByBookId(String bookId) {
-    return (select(readHistories)..where((tbl) => tbl.bookId.equals(bookId))).getSingle();
+    return (select(readHistories)..where((tbl) => tbl.bookId.equals(bookId)))
+        .getSingleOrNull();
   }
 
   Future updateReadInfo(ReadHistory history) {
