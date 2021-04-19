@@ -56,7 +56,7 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 1;
 
-  Future bookExist(String bookId) {
+  Future<bool> bookExist(String bookId) {
     return (select(bookInfos)..where((tbl) => tbl.bookId.equals(bookId)))
         .getSingleOrNull()
         .then((result) => result != null);

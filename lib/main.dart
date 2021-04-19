@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget bookShelf() {
-    return ShelfView();
+    return ShelfView(bloc: controller,);
   }
 
   Widget originChild() {

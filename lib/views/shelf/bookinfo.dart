@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../bean/book.dart';
 
+/// 显示书籍封面和书籍名称
 class BookCoverWidget extends StatelessWidget {
   final Book book;
 
@@ -38,6 +39,7 @@ class BookCoverWidget extends StatelessWidget {
   }
 }
 
+/// 显示书籍阅读进度
 class ReadProgressWidget extends StatelessWidget {
   final num progress;
 
@@ -91,7 +93,9 @@ class _ProgressPainter extends CustomPainter {
 
   int get position {
     int result = 0;
-    if (progress < 10) {
+    if (progress == 0) {
+      result = 0;
+    } else if (progress < 10) {
       result = 1;
     } else {
       result = progress ~/ 10;
@@ -128,6 +132,7 @@ class _ProgressPainter extends CustomPainter {
   }
 }
 
+/// 书架的书籍视图，包含[BookCoverWidget]和[ReadProgressWidget]
 class ShelfBookWidget extends StatelessWidget {
   final Book book;
   final ReadInfo readInfo;
