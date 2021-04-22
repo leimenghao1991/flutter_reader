@@ -1,5 +1,5 @@
 import 'package:flutter_reader/bean/book.dart';
-import 'package:flutter_reader/bookrepo/bookserver.dart';
+import 'package:flutter_reader/bookrepo/book_server.dart';
 import 'parser.dart' as parser;
 import '../db/database.dart';
 

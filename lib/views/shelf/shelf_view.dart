@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/views/shelf/bookinfo.dart';
+import 'package:flutter_reader/views/shelf/book_info.dart';
 import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
 
 class ShelfView extends StatefulWidget {

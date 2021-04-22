@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
-import 'package:flutter_reader/views/filepicker/filepicker.dart' as filePicker;
+import 'package:flutter_reader/views/filepicker/file_picker.dart' as filePicker;
 import 'package:flutter_reader/views/shelf/shelf_view.dart';
 
 void main() {
