@@ -7,6 +7,8 @@ abstract class BookServer {
   /// 获取用户书架书籍信息
   Future<List<Book>> getShelfBooks();
 
+  Future<Book> getBookById(String bookId);
+
   /// 获取用户历史阅读记录
   Future<List<ReadInfo>> getReadInfos();
 

@@ -8,7 +8,7 @@ class Book {
   String name;
 
   /// 书籍大小
-  num size;
+  int size;
 
   /// 封面
   String cover;
@@ -20,7 +20,7 @@ class Book {
   String encode;
 
   /// 添加时间
-  num addTime;
+  int addTime;
 
   Book(
       {@required this.bookId,
@@ -54,10 +54,10 @@ class ReadInfo {
   String bookId;
 
   /// 上次阅读时间  ms
-  num lastReadTime;
+  int lastReadTime;
 
   /// 上次阅读位置
-  num readPosition;
+  int readPosition;
 
   /// 是否是最后阅读的书籍
   bool lastRead;

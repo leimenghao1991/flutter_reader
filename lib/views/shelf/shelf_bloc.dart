@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_reader/bean/book.dart';
 import 'package:flutter_reader/bookrepo/test_server.dart';
 import 'package:flutter_reader/utils/log.dart' as Log;
@@ -8,7 +8,7 @@ import 'package:flutter_reader/utils/utils.dart';
 
 class ShelfBloc {
   static const String TAG = "ShelfBloc";
-  final LocalBookServer _localBookServer = LocalBookServer();
+  final LocalBookServer _localBookServer = LocalBookServer.getInstance();
   final StreamController<List<BookWithInfo>> _shelfBooksSC = StreamController();
 
   Stream<List<BookWithInfo>> get books => _shelfBooksSC.stream;
@@ -30,6 +30,10 @@ class ShelfBloc {
     await _localBookServer.addReadInfo(readInfo);
 
     queryAllBooks();
+  }
+
+  Future<ReadInfo> getReadInfo() {
+    return _localBookServer.getLastReadInfo();
   }
 
   Future<void> queryAllBooks() async {

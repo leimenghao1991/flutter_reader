@@ -78,6 +78,11 @@ class Database extends _$Database {
     return delete(bookInfos).delete(book);
   }
 
+  Future getBookById(String bookId) {
+    return ((select(bookInfos))..where((tbl) => tbl.bookId.equals(bookId)))
+        .getSingleOrNull();
+  }
+
   Future deleteBookById(String id) {
     return (delete(bookInfos)..where((tbl) => tbl.bookId.equals(id))).go();
   }

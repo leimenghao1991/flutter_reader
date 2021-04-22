@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/views/page/page_view.dart';
 import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
 import 'package:flutter_reader/views/filepicker/file_picker.dart' as filePicker;
 import 'package:flutter_reader/views/shelf/shelf_view.dart';
@@ -52,18 +53,20 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   ShelfBloc controller = ShelfBloc();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void _addBook() {
     filePicker
         .selectFile()
         .then((selectedBook) => controller.addBook(selectedBook));
+  }
+
+  void _openBook() {
+    controller.getReadInfo().then((value) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        print("open book info: $value");
+        return new BookPageView(info: value);
+        // return ImageGenerator();
+      }));
+    });
   }
 
   @override
@@ -86,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: bookShelf(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _openBook,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -94,7 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget bookShelf() {
-    return ShelfView(bloc: controller,);
+    return ShelfView(
+      bloc: controller,
+    );
+  }
+
+  Widget pageView() {
+    return PageView();
   }
 
   Widget originChild() {

@@ -1,10 +1,4 @@
 import '../bean/book.dart';
-import '../bean/book.dart';
-import '../bean/book.dart';
-import '../db/database.dart';
-import '../db/database.dart';
-import '../db/database.dart';
-import '../db/database.dart';
 import '../db/database.dart';
 
 Book parseToBook(BookInfo info) {

@@ -52,4 +52,10 @@ class _ShelfViewState extends State<ShelfView> {
           );
         });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.bloc.dispose();
+  }
 }
