@@ -57,7 +57,7 @@ class ReadProgressWidget extends StatelessWidget {
         ),
         Container(
           child: Text(
-            "$progress%",
+            progress.toStringAsFixed(2),
             style: TextStyle(fontSize: 12, color: Colors.grey),
           ),
           margin: EdgeInsets.only(left: 5),
@@ -140,6 +140,7 @@ class ShelfBookWidget extends StatelessWidget {
   ShelfBookWidget({this.book, this.readInfo});
 
   num get progress {
+    print("readInfo $readInfo; book size: ${book.size}");
     return readInfo.readPosition / book.size;
   }
 
