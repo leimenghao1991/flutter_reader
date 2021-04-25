@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/bean/book.dart';
 import 'package:flutter_reader/views/shelf/book_info.dart';
 import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
 
 class ShelfView extends StatefulWidget {
   final ShelfBloc bloc;
+  final OnBookClick onClick;
 
-  ShelfView({Key key, @required this.bloc}) : super(key: key);
+  ShelfView({Key key, @required this.bloc, this.onClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -43,13 +45,16 @@ class _ShelfViewState extends State<ShelfView> {
             crossAxisCount: 3, childAspectRatio: 0.707),
         itemCount: books.length,
         itemBuilder: (context, index) {
-          return Container(
-            child: ShelfBookWidget(
-              book: books[index].book,
-              readInfo: books[index].info,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
-          );
+          return GestureDetector(
+              onTap: () =>
+                  widget.onClick?.call(books[index].book, books[index].info),
+              child: Container(
+                child: ShelfBookWidget(
+                  book: books[index].book,
+                  readInfo: books[index].info,
+                ),
+                margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              ));
         });
   }
 
@@ -59,3 +64,5 @@ class _ShelfViewState extends State<ShelfView> {
     widget.bloc.dispose();
   }
 }
+
+typedef OnBookClick = Function(Book book, ReadInfo info);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reader/bean/book.dart';
 import 'package:flutter_reader/views/page/page_view.dart';
 import 'package:flutter_reader/views/shelf/shelf_bloc.dart';
 import 'package:flutter_reader/views/filepicker/file_picker.dart' as filePicker;
@@ -59,14 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
         .then((selectedBook) => controller.addBook(selectedBook));
   }
 
-  void _openBook() {
-    controller.getReadInfo().then((value) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        print("open book info: $value");
-        return new BookPageView(info: value);
-        // return ImageGenerator();
-      }));
-    });
+  void _openBook(Book book, ReadInfo info) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      print("open book info: $info");
+      return new BookPageView(info: info);
+      // return ImageGenerator();
+    }));
   }
 
   @override
@@ -89,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: bookShelf(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _openBook,
-        // onPressed: _addBook,
+        onPressed: _addBook,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -100,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget bookShelf() {
     return ShelfView(
       bloc: controller,
+      onClick: _openBook,
     );
   }
 
