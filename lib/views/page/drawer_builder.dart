@@ -5,10 +5,18 @@ abstract class ContentDrawer {
 }
 
 class DrawerBuilder {
-  List<ContentDrawer> drawers = [];
+  Size size;
+  List<ContentDrawer> _drawers = [];
+  final _recorder = new PictureRecorder();
+  Canvas _canvas;
+
+  DrawerBuilder(this.size) {
+    final pageSize = Rect.fromLTWH(0, 0, size.width, size.height);
+    _canvas = Canvas(_recorder, pageSize);
+  }
 
   DrawerBuilder add(ContentDrawer drawer) {
-    drawers.add(drawer);
+    _drawers.add(drawer);
     return this;
   }
 
@@ -16,21 +24,18 @@ class DrawerBuilder {
     return window.devicePixelRatio;
   }
 
-  Future<Image> build(Size size) {
-    final recorder = new PictureRecorder();
-    final pageSize = Rect.fromLTWH(0, 0, size.width, size.height);
-    final canvas = Canvas(recorder, pageSize);
+  Future<Image> build() {
     double dpr = getScale();
-    canvas.scale(dpr, dpr);
+    _canvas.scale(dpr, dpr);
 
-    drawers.forEach((drawer) {
-      canvas.save();
-      drawer.paint(canvas, size);
-      canvas.restore();
+    _drawers.forEach((drawer) {
+      _canvas.save();
+      drawer.paint(_canvas, size);
+      _canvas.restore();
     });
 
-    final picture = recorder.endRecording();
+    final picture = _recorder.endRecording();
     return picture.toImage(
-        (pageSize.width * dpr).ceil(), (pageSize.height * dpr).ceil());
+        (size.width * dpr).ceil(), (size.height * dpr).ceil());
   }
 }

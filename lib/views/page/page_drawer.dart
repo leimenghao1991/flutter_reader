@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reader/views/page/drawer_builder.dart';
+
 class TextDrawer extends ContentDrawer {
   String content;
   TextStyle style;
@@ -11,13 +12,15 @@ class TextDrawer extends ContentDrawer {
 
   @override
   void paint(Canvas canvas, Size size) {
-    TextStyle txStyle = style ?? new TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w600);
+    TextStyle txStyle = style ??
+        new TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w600);
     TextSpan textSpan = TextSpan(text: content, style: txStyle);
-    TextPainter textPainter = TextPainter(text: textSpan, textDirection: TextDirection.ltr);
+    TextPainter textPainter =
+        TextPainter(text: textSpan, textDirection: TextDirection.ltr);
 
     textPainter.layout(minWidth: 0, maxWidth: size.width);
     textPainter.paint(canvas, Offset.zero);
@@ -35,5 +38,4 @@ class BackgroundDrawer extends ContentDrawer {
   void paint(Canvas canvas, Size size) {
     canvas.drawColor(Colors.blue, BlendMode.color);
   }
-
 }
